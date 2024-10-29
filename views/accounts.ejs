@@ -1,11 +1,11 @@
 <%- include("components/navbar.ejs") %>
 
-<div class="px-20 mt-10">
-  <h1 class="mb-3 text-2xl font-semibold">Pusat Akun</h1>
+<div class="px-20 pt-10 bg-[url('/assets/bg.png')] bg-cover h-[100vh] w-full">
+  <h1 class="mb-3 text-2xl font-semibold text-white">Pusat Akun</h1>
   <a href="/add" class="px-3 py-1 text-white transition-all bg-green-500 rounded-md shadow-lg hover:bg-green-700">Tambah Data</a>
-  <table class="min-w-full mt-5 mb-20 bg-white border border-gray-300">
+  <table class="min-w-full mt-5 mb-20 text-white bg-blue-900 border border-gray-300">
     <thead>
-      <tr class="bg-gray-200">
+      <tr class="bg-white">
         <th class="px-4 py-2 text-sm font-medium text-left text-gray-700 border-b border-gray-300">No</th>
         <th class="px-4 py-2 text-sm font-medium text-left text-gray-700 border-b border-gray-300">Jenis akun</th>
         <th class="px-4 py-2 text-sm font-medium text-left text-gray-700 border-b border-gray-300">Email</th>
@@ -14,13 +14,17 @@
     </thead>
     <tbody>
       <% all.forEach((e,i) => { %>
-      <tr class="hover:bg-gray-100">
+      <tr class="hover:bg-gray-100 hover:text-blue-700">
         <td class="px-4 py-2 border-b border-gray-300"><%= i+1 %></td>
         <td class="px-4 py-2 border-b border-gray-300"><%= e.type %></td>
         <td class="px-4 py-2 border-b border-gray-300"><%= e.email %></td>
         <td class="px-4 py-2 border-b border-gray-300">
           <div class="flex gap-3">
-            <a href="/delete/<%= e.id %>" class="px-2 py-1 text-white transition-all bg-red-500 rounded-md hover:bg-red-700" onclick="return confirm('yakin dek')">Delete</a>
+            <form action="/delete/?_method=DELETE" method="post">
+              <input type="hidden" name="id" value="<%= e.id %>" />
+
+              <button class="px-2 py-1 text-white transition-all bg-red-500 rounded-md hover:bg-red-700" onclick="return confirm('yakin dek')">Delete</button>
+            </form>
             <a href="/detail/<%=e.id %>" class="px-2 py-1 text-white transition-all bg-blue-600 rounded-md hover:bg-blue-800">Detail</a>
             <a href="/edit/<%= e.id %>" class="px-2 py-1 text-white transition-all bg-blue-600 rounded-md hover:bg-blue-800">Edit</a>
           </div>

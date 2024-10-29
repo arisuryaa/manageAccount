@@ -3,8 +3,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const { body, validationResult } = require("express-validator");
-const { allAccount, detailAccount, updateAccount, addAccount, deleteAccount } = require("./controller/accountController.js");
+const methodOverride = require("method-override");
+const { allAccount, detailAccount, updateAccount, addAccount, deleteAccount, accountByid } = require("./controller/accountController.js");
 
+app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -32,14 +34,12 @@ app.get("/add", (req, res) => {
   res.render("add-account.ejs", { title: "add" });
 });
 
-app.get("/delete/:key", async (req, res) => {
-  const key = req.params.key;
-  console.log(key);
-  await deleteAccount(key);
+app.delete("/delete", async (req, res) => {
+  await deleteAccount(req.body.id);
   res.redirect("/accounts");
 });
 
-app.post("/edit-account", [body("email").isEmail().withMessage("masukkan email yang valid mas...`").normalizeEmail()], async (req, res) => {
+app.put("/edit-account", [body("email").isEmail().withMessage("masukkan email yang valid mas...`").normalizeEmail()], async (req, res) => {
   const errors = validationResult(req);
   const data = req.body;
   const dataOld = await detailAccount(data.id);
@@ -53,8 +53,13 @@ app.post("/edit-account", [body("email").isEmail().withMessage("masukkan email y
 
 app.post("/add-account", async (req, res) => {
   const data = req.body;
-  await addAccount(data);
-  res.redirect("/accounts");
+  const sameData = await accountByid(data.type);
+  if (sameData && sameData.type === data.type) {
+    res.render("add-account", { title: "add", result: ["Jenis Akun sudah terdaftar (tidak boleh sama !)"] });
+  } else {
+    await addAccount(data);
+    res.redirect("/accounts");
+  }
 });
 
 app.use((req, res) => {

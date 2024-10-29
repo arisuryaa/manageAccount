@@ -1,19 +1,18 @@
 <%- include("./components/navbar.ejs") %> <% if (account) { %>
-<div class="px-20 mt-16">
+<div class="px-20 pt-16 bg-[url('/assets/bg.png')] bg-cover h-[100vh] w-full text-white">
   <h1 class="text-3xl font-semibold">Detail Akun : <%= account.type %></h1>
-</div>
-
-<div class="flex flex-col gap-4 px-20 pt-5">
-  <ul>
-    <li class="text-xl">Jenis Akun : <%= account.type %></li>
-  </ul>
-  <ul>
-    <li class="text-xl">Email : <%= account.email %></li>
-  </ul>
-  <ul>
-    <li class="text-xl">Password : <%= account.password %></li>
-  </ul>
-  <a href="/accounts" class="mt-10 text-blue-400"> ⬅️Kembali Ke Halaman Data</a>
+  <div class="flex flex-col gap-4 pt-5 text-white">
+    <ul>
+      <li class="text-xl text-white">Jenis Akun : <%= account.type %></li>
+    </ul>
+    <ul>
+      <li class="text-xl">Email : <%= account.email %></li>
+    </ul>
+    <ul>
+      <li class="text-xl">Password : <%= account.password %></li>
+    </ul>
+    <a href="/accounts" class="mt-10 text-secondary"> ⬅️Kembali Ke Halaman Data</a>
+  </div>
 </div>
 
 <% } else{ %>

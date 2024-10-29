@@ -63,4 +63,17 @@ const deleteAccount = async (id) => {
   }
 };
 
-module.exports = { allAccount, detailAccount, updateAccount, addAccount, deleteAccount };
+const accountByid = async (type) => {
+  try {
+    const dataDetail = await user.findOne({ type: type });
+    if (!dataDetail) {
+      throw new Error("data tidak ada");
+    } else {
+      return dataDetail;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { allAccount, detailAccount, updateAccount, addAccount, deleteAccount, accountByid };

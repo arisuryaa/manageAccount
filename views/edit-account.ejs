@@ -7,22 +7,43 @@
 </div>
 
 <% } %>
-<div class="px-20 pt-5">
+<div class="px-20 pt-5 bg-[url('/assets/bg.png')] bg-cover h-[100vh] w-full text-white">
   <h1 class="mb-5 text-3xl font-semibold">Edit Data Account</h1>
-  <form action="/edit-account" method="post">
+  <form action="/edit-account/?_method=PUT" method="post">
     <input type="hidden" placeholder="Masukkan Jenis Account" value="<%= account.id %>" name="id" class="px-2 py-2 border border-black rounded-md bg-none active:border-none" />
     <div class="flex flex-col gap-5">
       <div class="flex flex-col gap-2">
         <label for="">Jenis Account : </label>
-        <input type="text" placeholder="Masukkan Jenis Account" value="<%= account.type %>" name="type" class="px-2 py-2 border border-black rounded-md bg-none active:border-none" />
+        <input
+          required
+          type="text"
+          placeholder="Masukkan Jenis Account"
+          value="<%= account.type %>"
+          name="type"
+          class="px-2 py-2 text-black border border-black rounded-md bg-none active:border-none"
+        />
       </div>
       <div class="flex flex-col gap-2">
         <label for="">Email Account : </label>
-        <input type="email" placeholder="Masukkan Email Account" value="<%= account.email %>" name="email" class="px-2 py-2 border border-black rounded-md bg-none active:border-none" />
+        <input
+          required
+          type="email"
+          placeholder="Masukkan Email Account"
+          value="<%= account.email %>"
+          name="email"
+          class="px-2 py-2 text-black border border-black rounded-md bg-none active:border-none"
+        />
       </div>
       <div class="flex flex-col gap-2">
         <label for="">Password Account : </label>
-        <input type="password" placeholder="Masukkan Password Account" value="<%= account.password %>" name="password" class="px-2 py-2 border border-black rounded-md bg-none active:border-none" />
+        <input
+          required
+          type="password"
+          placeholder="Masukkan Password Account"
+          value="<%= account.password %>"
+          name="password"
+          class="px-2 py-2 text-black border border-black rounded-md bg-none active:border-none"
+        />
       </div>
       <div class="flex justify-end">
         <button class="w-3/12 py-1 text-white transition-all bg-blue-400 rounded-md shadow-lg hover:bg-blue-800">Submit</button>
