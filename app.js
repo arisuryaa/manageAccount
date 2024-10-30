@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 const { body, validationResult } = require("express-validator");
 const methodOverride = require("method-override");
-const { allAccount, detailAccount, updateAccount, addAccount, deleteAccount, accountByid } = require("./controller/accountController.js");
+const { allAccount, detailAccount, updateAccount, addAccount, deleteAccount, accountByid, register } = require("./controller/accountController.js");
 
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
@@ -12,6 +12,10 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
+  res.render("login", { title: "login" });
+});
+
+app.get("/home", (req, res) => {
   res.render("home");
 });
 
@@ -32,6 +36,14 @@ app.get("/edit/:key", async (req, res) => {
 
 app.get("/add", (req, res) => {
   res.render("add-account.ejs", { title: "add" });
+});
+
+app.get("/register", (req, res) => {
+  res.render("register", { title: "register" });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login", { title: "login" });
 });
 
 app.delete("/delete", async (req, res) => {
@@ -59,6 +71,16 @@ app.post("/add-account", async (req, res) => {
   } else {
     await addAccount(data);
     res.redirect("/accounts");
+  }
+});
+
+app.post("/register", async (req, res) => {
+  const data = req.body;
+  if (data.password == data.password2) {
+    await register(data);
+    res.redirect("login");
+  } else {
+    res.render("register", { title: "register", error: ["konfirmasi password salah!"] });
   }
 });
 

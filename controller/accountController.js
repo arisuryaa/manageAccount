@@ -1,4 +1,6 @@
 const user = require("../models/accounts.js");
+const bcrypt = require("bcrypt");
+const admin = require("../models/admin.js");
 
 const allAccount = async () => {
   try {
@@ -76,4 +78,23 @@ const accountByid = async (type) => {
   }
 };
 
-module.exports = { allAccount, detailAccount, updateAccount, addAccount, deleteAccount, accountByid };
+const register = async (data) => {
+  try {
+    const saltRound = 10;
+    const hashPassword = await bcrypt.hash(data.password, saltRound);
+    const account = {
+      username: data.username,
+      password: hashPassword,
+    };
+    const insert = await admin.create(account);
+    if (!insert) {
+      throw new Error("gagal register");
+    } else {
+      console.log("data berhasil ditambah");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { allAccount, detailAccount, updateAccount, addAccount, deleteAccount, accountByid, register };
